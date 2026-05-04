@@ -1,148 +1,53 @@
-import { useEffect, useState } from 'react';
-
-import {
-
-    getProducts,
-    getProductById,
-    createProduct,
-    updateProduct,
-    deleteProduct
-
-} from '../services/productService';
-
-
+import { useParams } from "react-router-dom";
+import Product from "../components/Product";
 
 export default function Products() {
 
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-
-        fetchProducts();
-
-    }, []);
-
-    const fetchProducts = async () => {
-
-        try {
-
-            const res = await getProducts();
-
-            setProducts(res.data);
-
-        } catch (err) { console.log(err); }
-
-    };
-
-    const handleGetProduct = async (id) => {
-
-        try {
-
-            const res = await getProductById(id);
-
-            console.log(res.data);
-
-        } catch (err) { console.log(err); }
-
-    };
-
-    const handleCreateProduct = async () => {
-
-        const data = {
-            name: 'New Product',
-            offer: 'Demo offer',
-            description: 'Demo description',
-            category_product_id: 1
-        };
-
-        try {
-
-            const res = await createProduct(data);
-
-            console.log(res.data);
-
-            fetchProducts();
-
-        } catch (err) { console.log(err); }
-
-    };
-
-    const handleUpdateProduct = async (id) => {
-
-        const data = {
-            name: 'Updated Product',
-            offer: 'Updated offer',
-            description: 'Updated description',
-            category_product_id: 1
-        };
-
-        try {
-
-            const res = await updateProduct(id, data);
-
-            console.log(res.data);
-
-            fetchProducts();
-
-        } catch (err) { console.log(err); }
-
-    };
-
-    const handleDeleteProduct = async (id) => {
-
-        try {
-
-            const res = await deleteProduct(id);
-
-            console.log(res.data);
-
-            fetchProducts();
-
-        } catch (err) { console.log(err); }
-
-    };
+    const { category_product_id } = useParams();
 
     return (
         <div>
-            <h1>Products</h1>
+            <section className="pb-[50px]">
 
-            <button onClick={handleCreateProduct}>
-                Add Product
-            </button>
-
-            <hr />
-            {
-                products.map((item) => (
-                    <div
-                        key={item.id}
-                        style={{
-                            border: '1px solid #ccc',
-                            padding: '10px',
-                            marginBottom: '10px'
-                        }}
-                    >
-                        <h3>{item.name}</h3>
-
-                        <p>Offer: {item.offer}</p>
-
-                        <p>Category: {item.category_name}</p>
-
-                        <div class="flex gap-5">
-                            <button onClick={() => handleGetProduct(item.id)}>
-                                View
-                            </button>
-
-                            <button onClick={() => handleUpdateProduct(item.id)}>
-                                Update
-                            </button>
-
-                            <button onClick={() => handleDeleteProduct(item.id)}>
-                                Delete
-                            </button>
+                <div className="w-full h-[150px] bg-[url(/src/assets/images/home-banner-2.png)] bg-no-repeat bg-cover bg-bottom">
+                    <div className="bg-(--dark-blue-70) w-full h-full">
+                        <div className="container pt-[45px]">
+                            <div className="flex justify-center items-center">
+                                <p className="text-(--white) text-[35px] font-semibold border-b-3 w-[250px] text-center">SẢN PHẨM</p>
+                            </div>
                         </div>
                     </div>
-                ))
-            }
+                </div>
+
+            </section>
+
+            <div className="absolute top-[500px] w-full z-[-10]">
+                <img className='w-full' src="/src/assets/images/home-vector-2.png" alt="" />
+            </div>
+
+            <section className="pb-[100px]">
+
+                <div className="container">
+                    <div className="flex justify-between items-center pb-[50px]">
+                        <p className="text-(--dark-blue) text-[35px] font-semibold">PHỤ KIỆN</p>
+                        <select name="" id="" className="border p-3 rounded-[10px] shadow-md/20 w-[250px]">
+                            <option value="">1</option>
+                            <option value="">2</option>
+                            <option value="">3</option>
+                        </select>
+                    </div>
+                    <div className="grid grid-cols-3 gap-10 place-items-center">
+                        <Product textStyle='text-lg text-(--white)' imageStyle='h-[370px]'></Product>
+                        <Product textStyle='text-lg text-(--white)' imageStyle='h-[370px]'></Product>
+                        <Product textStyle='text-lg text-(--white)' imageStyle='h-[370px]'></Product>
+                        <Product textStyle='text-lg' imageStyle='h-[370px]'></Product>
+                        <Product textStyle='text-lg' imageStyle='h-[370px]'></Product>
+                        <Product textStyle='text-lg' imageStyle='h-[370px]'></Product>
+                    </div>
+                </div>
+
+            </section>
         </div>
     );
+
 }

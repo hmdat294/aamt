@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 export default function Header() {
 
     return (
 
-        <header className="w-full">
+        <header className="w-full sticky z-100 top-[-30px]">
             <div className='w-full h-[30px] bg-(--dark-blue) flex items-center'>
                 <div className='container text-(--white) flex justify-end items-center gap-3'>
                     <p className='flex gap-2 justify-center items-center'>
@@ -24,7 +26,7 @@ export default function Header() {
                 </div>
             </div>
 
-            <div className='w-full h-[80px] flex items-center border-b border-(--dark-blue)'>
+            <div className='w-full h-[80px] flex items-center border-b border-(--dark-blue) bg-(--white)'>
                 <div className='container flex justify-between items-center'>
                     <div className='flex justify-start items-center gap-5'>
                         <div className='w-[62px]'>
@@ -41,10 +43,10 @@ export default function Header() {
                     </div>
                     <div>
 
-                        <nav className="flex justify-end items-center gap-5 text-lg">
+                        <nav className="flex justify-end items-center gap-10 text-lg">
 
                             <Link to="/">
-                                <span className='flex items-center gap-2'>
+                                <span className='text-(--dark-blue) hover:text-(--orange) flex items-center gap-2'>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                                     </svg>
@@ -52,29 +54,48 @@ export default function Header() {
                                 </span>
                             </Link>
 
-                            <Link to="/products">
-                                <span className='flex items-center gap-2'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                    </svg>
+                            <Menu as="div">
+                                <MenuButton className='cursor-pointer outline-0 text-(--dark-blue) hover:text-(--orange) flex items-center gap-2'>
+                                    <ChevronDownIcon className="-mr-1 size-7" />
                                     Sản phẩm
-                                </span>
-                            </Link>
+                                </MenuButton>
 
-                            <Link to="/">
-                                <span>
+                                <MenuItems
+                                    transition
+                                    className="absolute z-20 mt-3 w-50 rounded-[10px] bg-(--white) outline-1">
+                                    <div>
+                                        <MenuItem>
+                                            <Link to="/products/1">
+                                                <span className='border-b px-3 py-1 text-(--dark-blue) hover:text-(--orange) flex items-center gap-2'>
+                                                    Máy
+                                                </span>
+                                            </Link>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Link to="/products/2">
+                                                <span className='px-3 py-1 text-(--dark-blue) hover:text-(--orange) flex items-center gap-2'>
+                                                    Phụ kiện
+                                                </span>
+                                            </Link>
+                                        </MenuItem>
+                                    </div>
+                                </MenuItems>
+                            </Menu>
+
+                            <Link to="/arch">
+                                <span className='text-(--dark-blue) hover:text-(--orange) '>
                                     Uốn vòm
                                 </span>
                             </Link>
 
-                            <Link to="/">
-                                <span>
+                            <Link to="/blogs">
+                                <span className='text-(--dark-blue) hover:text-(--orange) '>
                                     Bài viết
                                 </span>
                             </Link>
 
                             <Link to="/">
-                                <span>
+                                <span className='text-(--dark-blue) hover:text-(--orange) '>
                                     Giới thiệu
                                 </span>
                             </Link>

@@ -1,14 +1,17 @@
 import {
     BrowserRouter,
     Routes,
-    Route
+    Route,
+    Navigate
 } from 'react-router-dom';
 
 import MainLayout from './layouts/MainLayout';
 
 import Home from './pages/Home';
 import Products from './pages/Products';
-import ProductForm from './pages/ProductForm';
+import ProductForm from './pages/admin/ProductForm';
+import Blogs from './pages/Blogs';
+import Arch from './pages/Arch';
 
 export default function App() {
 
@@ -23,13 +26,33 @@ export default function App() {
                     <Route index element={<Home />} />
 
                     <Route
-                        path="products"
+                        path="products/:category_product_id"
                         element={<Products />}
                     />
 
+                    {/* <Route
+                        path="product/:id"
+                        element={<ProductDetail />}
+                    /> */}
+
                     <Route
+                        path="arch"
+                        element={<Arch />}
+                    />
+
+                    <Route
+                        path="blogs"
+                        element={<Blogs />}
+                    />
+
+                    {/* <Route
                         path="create-product"
                         element={<ProductForm />}
+                    /> */}
+
+                    <Route
+                        path="*"
+                        element={<Navigate to="/" replace />}
                     />
 
                 </Route>
