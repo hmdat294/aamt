@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+:root {
+    --white: rgba(255, 255, 255, 1);
+    /* FFFFFF */
+    --white-70: rgba(255, 255, 255, 0.7);
+    /* FFFFFF */
+    --dark-blue: rgba(28, 36, 55, 1);
+    /* 1C2437 */
+    --dark-blue-90: rgba(28, 36, 55, 0.9);
+    /* 1C2437 */
+    --dark-blue-70: rgba(28, 36, 55, 0.7);
+    /* 1C2437 */
+    --dark-blue-50: rgba(28, 36, 55, 0.5);
+    /* 1C2437 */
+    --gray: rgba(89, 89, 89, 1);
+    /* 595959 */
+    --white-gray: rgba(177, 177, 177, 1);
+    /* B1B1B1 */
+    --orange: rgba(255, 101, 0, 1);
+    /* FF6500 */
+}
+
+.container {
+    width: 1190px;
+    margin: auto;
+}

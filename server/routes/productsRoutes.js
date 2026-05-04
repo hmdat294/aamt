@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 
 const db = require('../config/db');
 
@@ -71,6 +72,23 @@ router.get('/products/:id', (req, res) => {
 });
 
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+
+    filename: (req, file, cb) => {
+        cb(
+            null,
+            Date.now() + path.extname(file.originalname)
+        );
+    }
+});
+
+
+const upload = multer({ storage });
+
+
 router.post(
     '/products',
     upload.array('images', 10),
@@ -84,13 +102,6 @@ router.post(
         } = req.body;
 
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | INSERT PRODUCT
-        |--------------------------------------------------------------------------
-        */
-
         const sql = `
             INSERT INTO products (
                 category_product_id,
@@ -100,7 +111,6 @@ router.post(
             )
             VALUES (?, ?, ?, ?)
         `;
-
 
 
         db.query(
@@ -118,16 +128,8 @@ router.post(
                 }
 
 
-
                 const productId = result.insertId;
 
-
-
-                /*
-                |--------------------------------------------------------------------------
-                | INSERT IMAGES
-                |--------------------------------------------------------------------------
-                */
 
                 if (req.files.length > 0) {
 
@@ -139,7 +141,6 @@ router.post(
                     );
 
 
-
                     const imageSql = `
                         INSERT INTO product_images (
                             product_id,
@@ -147,7 +148,6 @@ router.post(
                         )
                         VALUES ?
                     `;
-
 
 
                     db.query(
@@ -200,13 +200,6 @@ router.put(
         } = req.body;
 
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | UPDATE PRODUCT
-        |--------------------------------------------------------------------------
-        */
-
         const sql = `
             UPDATE products
             SET
@@ -216,7 +209,6 @@ router.put(
                 description = ?
             WHERE id = ?
         `;
-
 
 
         db.query(
@@ -235,20 +227,8 @@ router.put(
                 }
 
 
-
-                /*
-                |--------------------------------------------------------------------------
-                | IF HAS NEW IMAGES
-                |--------------------------------------------------------------------------
-                */
-
                 if (req.files.length > 0) {
 
-                    /*
-                    |--------------------------------------------------------------------------
-                    | DELETE OLD IMAGES
-                    |--------------------------------------------------------------------------
-                    */
 
                     db.query(
                         'DELETE FROM product_images WHERE product_id = ?',
@@ -261,13 +241,6 @@ router.put(
                                     .json(err2);
                             }
 
-
-
-                            /*
-                            |--------------------------------------------------------------------------
-                            | INSERT NEW IMAGES
-                            |--------------------------------------------------------------------------
-                            */
 
                             const imageValues =
                                 req.files.map(
@@ -327,46 +300,45 @@ router.put(
 );
 
 
-router.delete('/products/:id', (req, res) => {
+// router.delete('/products/:id', (req, res) => {
 
-    const { id } = req.params;
+//     const { id } = req.params;
 
-    const sql = 'DELETE FROM products WHERE id = ?';
+//     const sql = 'DELETE FROM products WHERE id = ?';
 
-    db.query(sql, [id], (err, result) => {
+//     db.query(sql, [id], (err, result) => {
 
-        if (err) return res.status(500).json(err);
-        res.json({
-            message: 'Product deleted successfully'
-        });
+//         if (err) return res.status(500).json(err);
+//         res.json({
+//             message: 'Product deleted successfully'
+//         });
 
-    });
+//     });
 
-});
+// });
 
 
-const multer = require('multer');
+// const multer = require('multer');
 
-const storage = multer.diskStorage({
+// const storage = multer.diskStorage({
 
-    destination: (req, file, cb) => {
+//     destination: (req, file, cb) => {
 
-        cb(null, 'uploads/');
+//         cb(null, 'uploads/');
 
-    },
+//     },
 
-    filename: (req, file, cb) => {
+//     filename: (req, file, cb) => {
 
-        cb(
-            null,
-            Date.now() + '-' + file.originalname
-        );
+//         cb(
+//             null,
+//             Date.now() + '-' + file.originalname
+//         );
 
-    }
+//     }
 
-});
+// });
 
-const upload = multer({ storage });
 
 
 module.exports = router;

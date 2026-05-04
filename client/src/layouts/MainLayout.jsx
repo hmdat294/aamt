@@ -8,17 +8,11 @@ export default function MainLayout() {
     return (
 
         <div>
-
             <Header />
-
-            <main className="container mx-auto py-5">
-
+            <main>
                 <Outlet />
-
             </main>
-
             <Footer />
-
         </div>
 
     );
