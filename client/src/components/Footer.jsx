@@ -2,14 +2,14 @@ export default function Footer() {
 
     return (
 
-        <footer className="w-full h-[480px] bg-[url(./src/assets/images/background-footer.png)] bg-cover">
+        <footer className="w-full h-[480px] bg-[url(/src/assets/images/background-footer.png)] bg-cover">
 
             <div className="bg-(--dark-blue-50) w-full h-full">
 
-                <div className="container py-[50px] grid grid-cols-2 gap-5">
+                <div className="container pt-[50px] grid grid-cols-2 gap-5">
                     <div className="bg-(--white-70) rounded-[10px] p-5 flex flex-col gap-5">
                         <div className="flex justify-start items-center gap-3">
-                            <img className="w-[62px]" src="./src/assets/images/logo-aamt.png" alt="" />
+                            <img className="w-[62px]" src="/src/assets/images/logo-aamt.png" alt="" />
                             <p className="text-xl font-medium">CÔNG TY TNHH MÁY SẢN XUẤT CỬA AAMT</p>
                         </div>
                         <div className="flex justify-start items-center gap-3">
@@ -24,20 +24,11 @@ export default function Footer() {
                             </svg>
                             <p className="text-lg">0902.562.225</p>
                         </div>
-                        <div className="w-full rounded-[10px] overflow-hidden bg-(--white) shadow-sm p-5">
-                            <div className="w-[500px] m-auto">
-                                <div className="fb-page"
-                                    data-href="https://www.facebook.com/maynhomnhuaAseandoor"
-                                    data-width="500"
-                                    data-small-header="false"
-                                    data-adapt-container-width="true"
-                                    data-hide-cover="false"
-                                    data-show-facepile="true">
-                                    <blockquote cite="https://www.facebook.com/maynhomnhuaAseandoor" className="fb-xfbml-parse-ignore">
-                                        <a href="https://www.facebook.com/maynhomnhuaAseandoor">Máy sản xuất cửa Nhôm Xingfa, cửa nhựa</a>
-                                    </blockquote>
-                                </div>
-                            </div>
+                        <div className="w-full h-full rounded-[10px] overflow-hidden bg-(--white) shadow-sm">
+                            <iframe
+                                className="w-full h-full scale-108 mt-6 ml-6"
+                                src="https://www.facebook.com/plugins/page.php?href=https://www.facebook.com/maynhomnhuaAseandoor&width=500"
+                            ></iframe>
                         </div>
                     </div>
 
@@ -59,7 +50,6 @@ export default function Footer() {
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div id="fb-root"></div>

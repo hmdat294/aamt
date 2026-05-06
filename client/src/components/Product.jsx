@@ -1,17 +1,19 @@
-export default function Product({textStyle, imageStyle}) {
+import { Link } from "react-router-dom";
+
+export default function Product({ textStyle, imageStyle }) {
 
     return (
 
-        <div className="flex flex-col gap-3 mb-5">
-            <img className={`${imageStyle || "h-full"} w-full shadow-md/20 rounded-[10px]`} src="/src/assets/images/product-image-1.png" alt="" />
+        <div className="flex flex-col gap-3 mb-5 group/img">
+            <img className={`${imageStyle || "h-full"} w-full shadow-md/20 rounded-[10px] group-hover/img:scale-95 transition`} src="/src/assets/images/product-image-1.png" alt="" />
             <p className={`${textStyle || ""}`}>Máy cắt ke vĩnh cửu JVJM10-40: Tự động, Nhanh, Tiết kiệm</p>
 
-            <button className="group relative overflow-hidden w-full bg-(--white) font-bold cursor-pointer p-2 flex justify-center items-center gap-1 border border-(--orange) text-(--orange) shadow-md/20 rounded-[10px] transition-colors duration-300">
+            <Link to="/product/1" className="group relative overflow-hidden w-full bg-(--white) font-bold cursor-pointer p-2 
+                flex justify-center items-center gap-1 border border-(--dark-blue) text-(--dark-blue) 
+                shadow-md/20 rounded-[10px] transition-colors">
 
-                {/* lớp nền chạy từ trái sang phải */}
-                <span className="absolute inset-0 bg-(--orange) scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                <span className="absolute inset-0 bg-(--dark-blue) scale-x-0 origin-left transition-transform group-hover:scale-x-100 duration-300"></span>
 
-                {/* nội dung */}
                 <span className="relative flex items-center gap-1 group-hover:text-(--white)">
                     Xem thêm
 
@@ -30,7 +32,7 @@ export default function Product({textStyle, imageStyle}) {
                         />
                     </svg>
                 </span>
-            </button>
+            </Link>
 
         </div>
 

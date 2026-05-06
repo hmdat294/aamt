@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Blogs() {
 
     return (
@@ -22,13 +24,29 @@ export default function Blogs() {
                         <div className="grid grid-cols-3 gap-5">
                             <img className='w-full h-[200px] rounded-[10px] shadow-md/20' src="/src/assets/images/post-image-1.png" alt="" />
                             <div className="col-span-2">
+                                <Link to="/blog/1">
+                                    <p className="text-xl">ASEANWINDOW TIÊN PHONG DẪN ĐẦU XU HƯỚNG NỔI BẬT TẠI VIETBUILD HÀ NỘI 2025</p>
+                                    <div className="border-b-3 w-[300px] my-2"></div>
+                                    <p className="text-justify">
+                                        ZEN PALACE là một dự án kiến trúc nổi bật tại Đà Nẵng, nơi vẻ đẹp thiên
+                                        nhiên gặp gỡ sự tinh tế của thiết kế hiện đại. Tại đây, toàn bộ hệ thống
+                                        cửa của công trình đều sử dụng nhôm Xingfa hệ Class A với sắc trắng
+                                        champagne (Z003), tạo nên không gian sống sang trọng và đẳng cấp.
+                                    </p>
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-5">
+                            <img className='w-full h-[200px] rounded-[10px] shadow-md/20' src="/src/assets/images/post-image-1.png" alt="" />
+                            <div className="col-span-2">
                                 <a href="/">
                                     <p className="text-xl">ASEANWINDOW TIÊN PHONG DẪN ĐẦU XU HƯỚNG NỔI BẬT TẠI VIETBUILD HÀ NỘI 2025</p>
                                     <div className="border-b-3 w-[300px] my-2"></div>
                                     <p className="text-justify">
-                                        ZEN PALACE là một dự án kiến trúc nổi bật tại Đà Nẵng, nơi vẻ đẹp thiên 
-                                        nhiên gặp gỡ sự tinh tế của thiết kế hiện đại. Tại đây, toàn bộ hệ thống 
-                                        cửa của công trình đều sử dụng nhôm Xingfa hệ Class A với sắc trắng 
+                                        ZEN PALACE là một dự án kiến trúc nổi bật tại Đà Nẵng, nơi vẻ đẹp thiên
+                                        nhiên gặp gỡ sự tinh tế của thiết kế hiện đại. Tại đây, toàn bộ hệ thống
+                                        cửa của công trình đều sử dụng nhôm Xingfa hệ Class A với sắc trắng
                                         champagne (Z003), tạo nên không gian sống sang trọng và đẳng cấp.
                                     </p>
                                 </a>
@@ -42,25 +60,9 @@ export default function Blogs() {
                                     <p className="text-xl">ASEANWINDOW TIÊN PHONG DẪN ĐẦU XU HƯỚNG NỔI BẬT TẠI VIETBUILD HÀ NỘI 2025</p>
                                     <div className="border-b-3 w-[300px] my-2"></div>
                                     <p className="text-justify">
-                                        ZEN PALACE là một dự án kiến trúc nổi bật tại Đà Nẵng, nơi vẻ đẹp thiên 
-                                        nhiên gặp gỡ sự tinh tế của thiết kế hiện đại. Tại đây, toàn bộ hệ thống 
-                                        cửa của công trình đều sử dụng nhôm Xingfa hệ Class A với sắc trắng 
-                                        champagne (Z003), tạo nên không gian sống sang trọng và đẳng cấp.
-                                    </p>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-3 gap-5">
-                            <img className='w-full h-[200px] rounded-[10px] shadow-md/20' src="/src/assets/images/post-image-1.png" alt="" />
-                            <div className="col-span-2">
-                                <a href="/">
-                                    <p className="text-xl">ASEANWINDOW TIÊN PHONG DẪN ĐẦU XU HƯỚNG NỔI BẬT TẠI VIETBUILD HÀ NỘI 2025</p>
-                                    <div className="border-b-3 w-[300px] my-2"></div>
-                                    <p className="text-justify">
-                                        ZEN PALACE là một dự án kiến trúc nổi bật tại Đà Nẵng, nơi vẻ đẹp thiên 
-                                        nhiên gặp gỡ sự tinh tế của thiết kế hiện đại. Tại đây, toàn bộ hệ thống 
-                                        cửa của công trình đều sử dụng nhôm Xingfa hệ Class A với sắc trắng 
+                                        ZEN PALACE là một dự án kiến trúc nổi bật tại Đà Nẵng, nơi vẻ đẹp thiên
+                                        nhiên gặp gỡ sự tinh tế của thiết kế hiện đại. Tại đây, toàn bộ hệ thống
+                                        cửa của công trình đều sử dụng nhôm Xingfa hệ Class A với sắc trắng
                                         champagne (Z003), tạo nên không gian sống sang trọng và đẳng cấp.
                                     </p>
                                 </a>

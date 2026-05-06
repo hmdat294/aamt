@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import ModalContact from "../components/ModalContact";
 
 export default function Arch() {
 
@@ -65,6 +66,8 @@ export default function Arch() {
 
     const [activeTab, setActiveTab] = useState(0);
 
+    const [openModal, setOpenModal] = useState(false);
+
     return (
         <div>
             <section className="pb-[50px]">
@@ -95,10 +98,11 @@ export default function Arch() {
                             Chúng tôi tiếp cận từng dự án với sự chăm chút và linh hoạt, đảm bảo
                             sản phẩm đầu ra đúng kỹ thuật - đẹp thẩm mỹ - đúng tiến độ.</p>
 
-                        <button className="group relative overflow-hidden w-full bg-(--white) 
-                        font-bold cursor-pointer p-3 flex justify-center items-center gap-1 
-                        border border-(--dark-blue) text-(--dark-blue) shadow-md/20 rounded-[10px] 
-                        transition-colors duration-300">
+                        <button onClick={() => setOpenModal(true)}
+                            className="group relative overflow-hidden w-full bg-(--white) 
+                            font-bold cursor-pointer p-3 flex justify-center items-center gap-1 
+                            border border-(--dark-blue) text-(--dark-blue) shadow-md/20 rounded-[10px] 
+                            transition-colors duration-300">
 
                             {/* lớp nền chạy từ trái sang phải */}
                             <span className="absolute inset-0 bg-(--dark-blue) scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
@@ -124,15 +128,14 @@ export default function Arch() {
             </section>
 
             <section className="container py-[100px]">
-                <div className="w-full mx-auto">
 
-                    <div className="flex items-end gap-1">
+                <div className="flex items-end gap-1">
 
-                        {tabs.map((tab, index) => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(index)}
-                                className={`
+                    {tabs.map((tab, index) => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(index)}
+                            className={`
                             px-5 py-2
                             text-lg
                             rounded-t-[10px]
@@ -142,29 +145,30 @@ export default function Arch() {
                             mb-[-1px]
                             cursor-pointer
                             ${activeTab === index
-                                        ? "border-b-0 font-semibold"
-                                        : ""
-                                    }
-                        `}
-                            >
-                                {tab.category_name}
-                            </button>
-                        ))}
-                    </div>
+                                    ? "border-b-0 font-semibold"
+                                    : "hover:text-(--orange)"
+                                }
+                        `}>
+                            {tab.category_name}
+                        </button>
+                    ))}
+                </div>
 
-                    <div className="bg-white border border-(--white-gray) p-5 rounded-b-[10px] shadow-md/10">
+                <div className="bg-white border border-(--white-gray) p-5 rounded-b-[10px] shadow-md/10">
 
-                        <p className="font-semibold">
-                            {tabs[activeTab].title}
-                        </p>
+                    <p className="font-semibold">
+                        {tabs[activeTab].title}
+                    </p>
 
-                        <p className="text-(--gray)">
-                            {tabs[activeTab].content}
-                        </p>
+                    <p className="text-(--gray)">
+                        {tabs[activeTab].content}
+                    </p>
 
-                    </div>
                 </div>
             </section>
+
+            <ModalContact open={openModal} setOpen={setOpenModal}></ModalContact>
+
         </div>
     );
 
