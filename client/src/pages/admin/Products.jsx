@@ -10,8 +10,6 @@ import {
 
 } from '../services/productService';
 
-
-
 export default function Products() {
 
     const [products, setProducts] = useState([]);

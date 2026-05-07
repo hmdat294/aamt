@@ -27,8 +27,12 @@ export default function Header() {
                     </p>
                 </div>
             </div>
+            
+            <div className="absolute w-full top-[-50px] h-[160px] overflow-hidden">
+                <img className='w-full' src="/src/assets/images/header-vector-1.png" alt="" />
+            </div>
 
-            <div className="absolute w-full top-0 h-[110px] overflow-hidden">
+            <div className="absolute w-full top-0 h-[110px] overflow-hidden opacity-80">
                 <img className='w-full' src="/src/assets/images/header-vector-1.png" alt="" />
             </div>
 

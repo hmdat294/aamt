@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getProvinces } from "../services/provincesService";
 
 export default function ModalContact({
     open,
@@ -6,6 +7,26 @@ export default function ModalContact({
 }) {
 
     if (!open) return null;
+
+    const [provinces, setProvinces] = useState([]);
+
+    useEffect(() => {
+
+        fetchProvinces();
+
+    }, []);
+
+    const fetchProvinces = async () => {
+
+        try {
+
+            const res = await getProvinces();
+
+            setProvinces(res.data);
+
+        } catch (err) { console.log(err); }
+
+    };
 
     return (
 
@@ -28,7 +49,7 @@ export default function ModalContact({
                         </svg>
                     </button>
 
-                    <div>
+                    <div className="flex flex-col gap-3 justify-center h-full pr-3 -ml-5">
 
                         <div className="flex gap-3 items-center font-semibold text-lg">
                             <img className='w-[62px]' src="/src/assets/images/logo-aamt.png" alt="" />
@@ -39,7 +60,7 @@ export default function ModalContact({
                             <label>
                                 <span className="text-(--gray) text-lg">Họ và Tên</span>
                                 <input className="w-full block border border-(--dark-blue) rounded-[10px] py-3 px-5 inset-shadow-sm bg-(--white)"
-                                 type="text" placeholder="Vui lòng nhập họ và tên" />
+                                    type="text" placeholder="Vui lòng nhập họ và tên" />
                             </label>
                         </div>
 
@@ -47,15 +68,25 @@ export default function ModalContact({
                             <label>
                                 <span className="text-(--gray) text-lg">Số điện thoại</span>
                                 <input className="w-full block border border-(--dark-blue) rounded-[10px] py-3 px-5 inset-shadow-sm bg-(--white)"
-                                 type="text" placeholder="Vui lòng nhập số điện thoại" />
+                                    type="text" placeholder="Vui lòng nhập số điện thoại" />
                             </label>
                         </div>
 
                         <div>
                             <label>
                                 <span className="text-(--gray) text-lg">Tỉnh thành</span>
-                                <input className="w-full block border border-(--dark-blue) rounded-[10px] py-3 px-5 inset-shadow-sm bg-(--white)"
-                                 type="text" placeholder="Vui lòng nhập họ và tên" />
+                                <select className="w-full block border border-(--dark-blue) rounded-[10px] py-3 px-5 inset-shadow-sm bg-(--white)">
+                                    <option>Chọn tỉnh thành</option>
+
+                                    {provinces.map((province) => (
+                                        <option
+                                            key={province.code}
+                                            value={province.name}
+                                        >
+                                            {province.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </label>
                         </div>
 
@@ -63,7 +94,7 @@ export default function ModalContact({
                             <label>
                                 <span className="text-(--gray) text-lg">Sản phẩm quan tâm</span>
                                 <input className="w-full block border border-(--dark-blue) rounded-[10px] py-3 px-5 inset-shadow-sm bg-(--white)"
-                                 type="text" placeholder="Vui lòng nhập họ và tên" />
+                                    type="text" placeholder="Vui lòng nhập họ và tên" />
                             </label>
                         </div>
 
@@ -71,16 +102,22 @@ export default function ModalContact({
                             className="group relative overflow-hidden w-full bg-(--white) 
                             font-bold cursor-pointer p-3 flex justify-center items-center gap-1 
                             border border-(--dark-blue) text-(--dark-blue) shadow-md/20 rounded-[10px] 
-                            transition-colors duration-300">
+                            transition-colors duration-300 mt-3">
 
                             {/* lớp nền chạy từ trái sang phải */}
                             <span className="absolute inset-0 bg-(--dark-blue) scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
 
                             {/* nội dung */}
-                            <span className="relative flex items-center gap-1 group-hover:text-(--white) text-xl">
-                                LIÊN HỆ NGAY
+                            <span className="relative flex items-center gap-1 group-hover:text-(--white) text-lg">
+                                NHẬN BÁO GIÁ NGAY
                             </span>
                         </button>
+
+                        <div>
+                            <p className="text-sm text-(--gray)">
+                                Hãy cho chúng tôi biết bạn đang cần gì, chúng tôi sẽ liên hệ với bạn qua thông tin bên trên trong thời gian sớm nhất!
+                            </p>
+                        </div>
 
                     </div>
                 </div>
