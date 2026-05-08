@@ -8,9 +8,9 @@ import {
     updateProduct,
     deleteProduct
 
-} from '../services/productService';
+} from '../../services/productService';
 
-export default function Products() {
+export default function AdminProducts() {
 
     const [products, setProducts] = useState([]);
 

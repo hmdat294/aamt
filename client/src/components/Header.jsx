@@ -28,11 +28,11 @@ export default function Header() {
                 </div>
             </div>
             
-            <div className="absolute w-full top-[-50px] h-[160px] overflow-hidden">
+            <div className="absolute w-full top-[-50px] h-[160px] overflow-hidden translate-item-x-1">
                 <img className='w-full' src="/src/assets/images/header-vector-1.png" alt="" />
             </div>
 
-            <div className="absolute w-full top-0 h-[110px] overflow-hidden opacity-80">
+            <div className="absolute w-full top-[-10px] h-[120px] overflow-hidden opacity-80 translate-item-x-2">
                 <img className='w-full' src="/src/assets/images/header-vector-1.png" alt="" />
             </div>
 

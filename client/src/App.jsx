@@ -5,9 +5,9 @@ import {
     Navigate,
     useLocation
 } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import MainLayout from './layouts/MainLayout';
-
 import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductForm from './pages/admin/ProductForm';
@@ -16,8 +16,12 @@ import Blogs from './pages/Blogs';
 import BlogDetail from './pages/BlogDetail';
 import ProductDetail from './pages/ProductDetail';
 import AboutUs from './pages/AboutUs';
-import { useEffect } from 'react';
 import ScrollToTop from "./components/ScrollToTop";
+
+import AdminLayout from './layouts/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminProducts from './pages/admin/AdminProducts';
+import AdminBlogs from './pages/admin/AdminBlogs';
 
 export default function App() {
 
@@ -29,6 +33,7 @@ export default function App() {
 
             <Routes>
 
+                {/* CLIENT ROUTES */}
                 <Route path="/" element={<MainLayout />}>
 
                     <Route index element={<Home />} />
@@ -62,18 +67,38 @@ export default function App() {
                         path="about_us"
                         element={<AboutUs />}
                     />
+                </Route>
 
-                    {/* <Route
-                        path="create-product"
-                        element={<ProductForm />}
-                    /> */}
+                {/* ADMIN ROUTES */}
+                <Route path="/admin" element={<AdminLayout />}>
 
                     <Route
-                        path="*"
-                        element={<Navigate to="/" replace />}
+                        index
+                        element={<AdminDashboard />}
+                    />
+
+                    <Route
+                        path="products"
+                        element={<AdminProducts />}
+                    />
+
+                    <Route
+                        path="products/create"
+                        element={<ProductForm />}
+                    />
+
+                    <Route
+                        path="blogs"
+                        element={<AdminBlogs />}
                     />
 
                 </Route>
+
+                {/* FALLBACK */}
+                <Route
+                    path="*"
+                    element={<Navigate to="/" replace />}
+                />
 
             </Routes>
 

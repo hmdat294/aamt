@@ -187,7 +187,7 @@ export default function ProductDetail() {
                 </article>
             </section>
 
-            <div className="absolute top-[800px] w-full z-[-10]">
+            <div className="absolute top-[800px] w-full z-[-10] translate-item-y-1">
                 <img className='w-full' src="/src/assets/images/home-vector-3.png" alt="" />
             </div>
 

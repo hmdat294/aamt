@@ -26,7 +26,7 @@ export default function Home() {
                 <img className='w-full' src="/src/assets/images/home-banner-1.png" alt="" />
             </section>
 
-            <div className="absolute w-full z-[-10]">
+            <div className="absolute w-full z-[-10] translate-item-y-1">
                 <img className='w-full' src="/src/assets/images/home-vector-1.png" alt="" />
             </div>
 

@@ -29,3 +29,69 @@
     width: 1190px;
     margin: auto;
 }
+
+@keyframes translateItemX {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(-20px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes translateItemY {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(20px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes radiusItem {
+    0% {
+        border-radius: 49% 50% 0 0;
+    }
+
+    25% {
+        border-radius: 50% 49% 0 0;
+    }
+
+    50% {
+        border-radius: 49% 50% 0 0;
+    }
+
+    75% {
+        border-radius: 50% 49% 0 0;
+    }
+
+    100% {
+        border-radius: 49% 50% 0 0;
+    }
+}
+
+.translate-item-x-1 {
+    animation: translateItemX 5s linear infinite;
+}
+
+.translate-item-x-2 {
+    animation: translateItemX 10s linear infinite;
+}
+
+.translate-item-y-1 {
+    animation: translateItemY 5s linear infinite;
+}
+
+.radius-item {
+    animation: radiusItem 5s linear infinite;
+}

@@ -48,7 +48,7 @@ export default function AboutUs() {
                 </div>
             </section>
 
-            <div className="absolute top-[1000px] w-full z-[-10]">
+            <div className="absolute top-[1000px] w-full z-[-10] translate-item-y-1">
                 <img className='w-full h-[700px]' src="/src/assets/images/about-vector-1.png" alt="" />
             </div>
 
@@ -60,7 +60,7 @@ export default function AboutUs() {
             </section>
 
             <section className="pt-[100px]">
-                <div className="h-[1200px] w-full bg-(--dark-blue) rounded-t-[50%]">
+                <div className="h-[1200px] w-full bg-(--dark-blue) radius-item">
                     <div className="container text-(--white) flex flex-col items-center gap-20 text-center py-[100px]">
 
                         <div className="max-w-[550px]">
