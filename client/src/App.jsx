@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 import Products from './pages/Products';
-import ProductForm from './pages/admin/ProductForm';
 import Arch from './pages/Arch';
 import Blogs from './pages/Blogs';
 import BlogDetail from './pages/BlogDetail';
@@ -22,6 +21,7 @@ import AdminLayout from './layouts/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminBlogs from './pages/admin/AdminBlogs';
+import AdminCategory from './pages/admin/AdminCategory';
 
 export default function App() {
 
@@ -81,15 +81,15 @@ export default function App() {
                         path="products"
                         element={<AdminProducts />}
                     />
-
-                    <Route
-                        path="products/create"
-                        element={<ProductForm />}
-                    />
-
+                    
                     <Route
                         path="blogs"
                         element={<AdminBlogs />}
+                    />
+
+                    <Route
+                        path="categories"
+                        element={<AdminCategory />}
                     />
 
                 </Route>

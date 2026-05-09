@@ -41,6 +41,13 @@ export default function AdminLayout() {
                         Blogs
                     </NavLink>
 
+                    <NavLink
+                        to="/admin/categories"
+                        className="px-4 py-2 rounded hover:bg-gray-800"
+                    >
+                        Category
+                    </NavLink>
+
                 </nav>
             </aside>
 

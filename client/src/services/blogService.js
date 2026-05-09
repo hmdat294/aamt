@@ -1,25 +1,25 @@
 import {api} from './api';
 
-export const getProducts = () => {
-    return api.get('/products');
+export const getPosts = () => {
+    return api.get('/posts');
 };
 
-export const getProductById = (id) => {
-    return api.get(`/products/${id}`);
+export const getPostById = (id) => {
+    return api.get(`/posts/${id}`);
 };
 
-export const createProduct = (data) => {
-    return api.post('/products', data, {
+export const createPost = (data) => {
+    return api.post('/posts', data, {
         headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'application/json'
         }
     });
 };
 
-export const updateProduct = (id, data) => {
-    return api.put(`/products/${id}`, data);
+export const updatePost = (id, data) => {
+    return api.put(`/posts/${id}`, data);
 };
 
-export const deleteProduct = (id) => {
-    return api.delete(`/products/${id}`);
+export const deletePost = (id) => {
+    return api.delete(`/posts/${id}`);
 };

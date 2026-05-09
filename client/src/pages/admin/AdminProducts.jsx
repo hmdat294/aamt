@@ -108,7 +108,6 @@ export default function AdminProducts() {
                 Add Product
             </button>
 
-            <hr />
             {
                 products.map((item) => (
                     <div

@@ -1,91 +1,91 @@
-// server/routes/upload.routes.js
+// // server/routes/upload.routes.js
 
-import express from 'express';
-import multer from 'multer';
-import path from 'path';
+// import express from 'express';
+// import multer from 'multer';
+// import path from 'path';
 
-const router = express.Router();
+// const router = express.Router();
 
-const storage = multer.diskStorage({
+// const storage = multer.diskStorage({
 
-    destination(req, file, cb) {
+//     destination(req, file, cb) {
 
-        cb(null, 'uploads/');
-    },
+//         cb(null, 'uploads/');
+//     },
 
-    filename(req, file, cb) {
+//     filename(req, file, cb) {
 
-        const uniqueName =
-            Date.now() +
-            '-' +
-            Math.round(Math.random() * 1e9);
+//         const uniqueName =
+//             Date.now() +
+//             '-' +
+//             Math.round(Math.random() * 1e9);
 
-        cb(
-            null,
-            uniqueName + path.extname(file.originalname)
-        );
-    },
-});
+//         cb(
+//             null,
+//             uniqueName + path.extname(file.originalname)
+//         );
+//     },
+// });
 
-const fileFilter = (req, file, cb) => {
+// const fileFilter = (req, file, cb) => {
 
-    const allowedMimeTypes = [
+//     const allowedMimeTypes = [
 
-        'image/jpeg',
-        'image/png',
-        'image/webp',
+//         'image/jpeg',
+//         'image/png',
+//         'image/webp',
 
-        'video/mp4',
-        'video/webm',
-        'video/ogg',
-    ];
+//         'video/mp4',
+//         'video/webm',
+//         'video/ogg',
+//     ];
 
-    if (allowedMimeTypes.includes(file.mimetype)) {
+//     if (allowedMimeTypes.includes(file.mimetype)) {
 
-        cb(null, true);
+//         cb(null, true);
 
-    } else {
+//     } else {
 
-        cb(
-            new Error('Only images and videos allowed'),
-            false
-        );
-    }
-};
+//         cb(
+//             new Error('Only images and videos allowed'),
+//             false
+//         );
+//     }
+// };
 
-const upload = multer({
+// const upload = multer({
 
-    storage,
+//     storage,
 
-    limits: {
-        fileSize: 1024 * 1024 * 100,
-    },
+//     limits: {
+//         fileSize: 1024 * 1024 * 100,
+//     },
 
-    fileFilter,
-});
+//     fileFilter,
+// });
 
-router.post(
-    '/',
-    upload.single('file'),
-    (req, res) => {
+// router.post(
+//     '/',
+//     upload.single('file'),
+//     (req, res) => {
 
-        if (!req.file) {
+//         if (!req.file) {
 
-            return res.status(400).json({
-                message: 'No file uploaded',
-            });
-        }
+//             return res.status(400).json({
+//                 message: 'No file uploaded',
+//             });
+//         }
 
-        const fileUrl =
-            `${req.protocol}://${req.get('host')}` +
-            `/uploads/${req.file.filename}`;
+//         const fileUrl =
+//             `${req.protocol}://${req.get('host')}` +
+//             `/uploads/${req.file.filename}`;
 
-        return res.json({
-            message: 'Upload success',
-            url: fileUrl,
-            type: req.file.mimetype,
-        });
-    }
-);
+//         return res.json({
+//             message: 'Upload success',
+//             url: fileUrl,
+//             type: req.file.mimetype,
+//         });
+//     }
+// );
 
-export default router;
+// export default router;
