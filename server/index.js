@@ -18,14 +18,7 @@ app.use(express.urlencoded({
     limit: '100mb',
 }));
 
-//upload file
-app.use(
-    '/uploads',
-    express.static(
-        path.join(__dirname, 'uploads')
-    )
-);
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', productsRoutes, postsRoutes, archsRoutes, categoryRoutes);
 
 app.get('/', (req, res) => {

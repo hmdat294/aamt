@@ -1,4 +1,4 @@
-import {api} from './api';
+import { api } from './api';
 
 export const getProducts = () => {
     return api.get('/products');
@@ -22,4 +22,8 @@ export const updateProduct = (id, data) => {
 
 export const deleteProduct = (id) => {
     return api.delete(`/products/${id}`);
+};
+
+export const deleteProductImage = (id) => {
+    api.delete(`/product-images/${id}`);
 };
