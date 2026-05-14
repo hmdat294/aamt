@@ -1,4 +1,5 @@
-import {api} from './api';
+import { api } from './api';
+import { adminApi } from './apiAdmin';
 
 export const getPosts = () => {
     return api.get('/posts');
@@ -9,7 +10,7 @@ export const getPostById = (id) => {
 };
 
 export const createPost = (data) => {
-    return api.post('/posts', data, {
+    return adminApi.post('/posts', data, {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -17,9 +18,9 @@ export const createPost = (data) => {
 };
 
 export const updatePost = (id, data) => {
-    return api.put(`/posts/${id}`, data);
+    return adminApi.put(`/posts/${id}`, data);
 };
 
 export const deletePost = (id) => {
-    return api.delete(`/posts/${id}`);
+    return adminApi.delete(`/posts/${id}`);
 };

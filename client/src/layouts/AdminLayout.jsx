@@ -1,5 +1,3 @@
-// src/layouts/AdminLayout.jsx
-
 import { Outlet, NavLink } from 'react-router-dom';
 
 export default function AdminLayout() {
@@ -13,38 +11,23 @@ export default function AdminLayout() {
 
                 <nav className="flex flex-col gap-3">
 
-                    <NavLink
-                        to="/admin"
-                        className="px-4 py-2 rounded bg-gray-800"
-                    >
+                    <NavLink to="/admin"
+                        className="px-4 py-2 rounded bg-gray-800">
                         Dashboard
                     </NavLink>
 
-                    <NavLink
-                        to="/admin/products"
-                        className="px-4 py-2 rounded hover:bg-gray-800"
-                    >
+                    <NavLink to="/admin/products"
+                        className="px-4 py-2 rounded hover:bg-gray-800">
                         Product
                     </NavLink>
 
-                    <NavLink
-                        to="/admin/products/create"
-                        className="px-4 py-2 rounded hover:bg-gray-800"
-                    >
-                        Create Product
-                    </NavLink>
-
-                    <NavLink
-                        to="/admin/blogs"
-                        className="px-4 py-2 rounded hover:bg-gray-800"
-                    >
+                    <NavLink to="/admin/blogs"
+                        className="px-4 py-2 rounded hover:bg-gray-800">
                         Blogs
                     </NavLink>
 
-                    <NavLink
-                        to="/admin/categories"
-                        className="px-4 py-2 rounded hover:bg-gray-800"
-                    >
+                    <NavLink to="/admin/categories"
+                        className="px-4 py-2 rounded hover:bg-gray-800">
                         Category
                     </NavLink>
 

@@ -1,4 +1,5 @@
 import { api } from './api';
+import { adminApi } from './apiAdmin';
 
 export const getCategoriesPost = () => {
     return api.get('/category_post');
@@ -11,7 +12,7 @@ export const getCategoryPostById = (id) => {
 export const createCategoryPost = (data) => {
     console.log(data);
 
-    return api.post('/category_post', data, {
+    return adminApi.post('/category_post', data, {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -19,7 +20,7 @@ export const createCategoryPost = (data) => {
 };
 
 export const updateCategoryPost = (id, data) => {
-    return api.put(`/category_post/${id}`, data, {
+    return adminApi.put(`/category_post/${id}`, data, {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -27,7 +28,7 @@ export const updateCategoryPost = (id, data) => {
 };
 
 export const deleteCategoryPost = (id) => {
-    return api.delete(`/category_post/${id}`);
+    return adminApi.delete(`/category_post/${id}`);
 };
 
 
@@ -36,17 +37,17 @@ export const deleteCategoryPost = (id) => {
 
 
 export const getCategoriesProduct = () => {
-    return api.get('/category_product');
+    return adminApi.get('/category_product');
 };
 
 export const getCategoryProductById = (id) => {
-    return api.get(`/category_product/${id}`);
+    return adminApi.get(`/category_product/${id}`);
 };
 
 export const createCategoryProduct = (data) => {
     console.log(data);
 
-    return api.post('/category_product', data, {
+    return adminApi.post('/category_product', data, {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -54,7 +55,7 @@ export const createCategoryProduct = (data) => {
 };
 
 export const updateCategoryProduct = (id, data) => {
-    return api.put(`/category_product/${id}`, data, {
+    return adminApi.put(`/category_product/${id}`, data, {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -62,5 +63,5 @@ export const updateCategoryProduct = (id, data) => {
 };
 
 export const deleteCategoryProduct = (id) => {
-    return api.delete(`/category_product/${id}`);
+    return adminApi.delete(`/category_product/${id}`);
 };

@@ -9,6 +9,7 @@ import {
 } from '../../services/productService';
 
 import { getCategoriesProduct } from '../../services/categoryService';
+import CustomUploadAdapterPlugin from '../../components/UploadAdapter';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -62,26 +63,6 @@ export default function AdminProducts() {
             console.log(err);
         }
     };
-
-    function CustomUploadAdapter(loader) {
-
-        return {
-            upload: async () => {
-                const file = await loader.file;
-                return new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve({ default: reader.result, });
-                    reader.readAsDataURL(file);
-                });
-            },
-        };
-    }
-
-    function CustomUploadAdapterPlugin(editor) {
-        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-            return CustomUploadAdapter(loader);
-        };
-    }
 
     const handleChange = (e, isEdit = false) => {
         const { name, value } = e.target;

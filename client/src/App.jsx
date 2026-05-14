@@ -22,6 +22,8 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminBlogs from './pages/admin/AdminBlogs';
 import AdminCategory from './pages/admin/AdminCategory';
+import Login from './pages/auth/Login';
+import PrivateRoute from './components/PrivateRoute';
 
 export default function App() {
 
@@ -69,8 +71,20 @@ export default function App() {
                     />
                 </Route>
 
+                {/* LOGIN ROUTES */}
+                <Route
+                    path="/login"
+                    element={<Login />}
+                />
+
                 {/* ADMIN ROUTES */}
-                <Route path="/admin" element={<AdminLayout />}>
+                <Route
+                    path="/admin"
+                    element={
+                        <PrivateRoute>
+                            <AdminLayout />
+                        </PrivateRoute>
+                    }>
 
                     <Route
                         index
@@ -81,7 +95,7 @@ export default function App() {
                         path="products"
                         element={<AdminProducts />}
                     />
-                    
+
                     <Route
                         path="blogs"
                         element={<AdminBlogs />}

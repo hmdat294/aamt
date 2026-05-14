@@ -2,12 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 
-require('dotenv').config();
-
 const productsRoutes = require('./routes/productsRoutes');
 const postsRoutes = require('./routes/postsRoutes');
 const archsRoutes = require('./routes/archsRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const loginRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -19,7 +18,7 @@ app.use(express.urlencoded({
 }));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/api', productsRoutes, postsRoutes, archsRoutes, categoryRoutes);
+app.use('/api', productsRoutes, postsRoutes, archsRoutes, categoryRoutes, loginRoutes);
 
 app.get('/', (req, res) => {
     res.send('API running...');

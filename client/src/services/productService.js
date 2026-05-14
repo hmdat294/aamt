@@ -1,4 +1,5 @@
 import { api } from './api';
+import { adminApi } from './apiAdmin';
 
 export const getProducts = () => {
     return api.get('/products');
@@ -9,7 +10,7 @@ export const getProductById = (id) => {
 };
 
 export const createProduct = (data) => {
-    return api.post('/products', data, {
+    return adminApi.post('/products', data, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
@@ -17,13 +18,13 @@ export const createProduct = (data) => {
 };
 
 export const updateProduct = (id, data) => {
-    return api.put(`/products/${id}`, data);
+    return adminApi.put(`/products/${id}`, data);
 };
 
 export const deleteProduct = (id) => {
-    return api.delete(`/products/${id}`);
+    return adminApi.delete(`/products/${id}`);
 };
 
 export const deleteProductImage = (id) => {
-    api.delete(`/product-images/${id}`);
+    adminApi.delete(`/product-images/${id}`);
 };
