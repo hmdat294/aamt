@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+import {
+    getToken,
+    removeToken
+} from '../utils/authCookie';
+
 export const adminApi = axios.create({
     baseURL: 'http://localhost:5000/api'
 });
@@ -8,11 +13,10 @@ adminApi.interceptors.request.use(
 
     (config) => {
 
-        const token = localStorage.getItem('token');
+        const token = getToken();
 
         if (token) {
-            config.headers.Authorization =
-                `Bearer ${token}`;
+            config.headers.Authorization =`Bearer ${token}`;
         }
 
         return config;
@@ -33,7 +37,7 @@ adminApi.interceptors.response.use(
             error.response?.status === 403
         ) {
 
-            localStorage.removeItem('token');
+            removeToken();
 
             window.location.href = '/login';
         }

@@ -12,7 +12,7 @@ export const getPostById = (id) => {
 export const createPost = (data) => {
     return adminApi.post('/posts', data, {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
         }
     });
 };

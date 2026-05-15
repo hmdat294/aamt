@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../config/db');
+const upload = require('../middleware/upload');
 
 router.get('/posts', (req, res) => {
 
@@ -62,16 +63,25 @@ router.get('/posts/:id', (req, res) => {
 
 
 
-router.post('/posts', (req, res) => {
+router.post('/posts', upload.single('thumbnail'), (req, res) => {
 
     const { title, content, category_post_id } = req.body;
 
-    if (!title || !content || !category_post_id)
-        return res.status(400).json({
-            message: 'Missing required fields',
-        });
+    const thumbnail = req.file
+        ? `http://localhost:5000/uploads/${req.file.filename}`
+        : null;
+    console.log(req.file);
 
-    const sql = `INSERT INTO posts ( title, content, category_post_id ) VALUES (?, ?, ?)`;
+    const sql = `
+        INSERT INTO posts
+        (
+            title,
+            content,
+            category_post_id,
+            thumbnail
+        )
+        VALUES (?, ?, ?, ?)
+    `;
 
     db.query(
         sql,
@@ -79,12 +89,16 @@ router.post('/posts', (req, res) => {
             title,
             content,
             category_post_id,
+            thumbnail
         ],
         (err, result) => {
+
             if (err) return res.status(500).json(err);
+
             res.json({
                 message: 'Post created successfully',
                 id: result.insertId,
+                thumbnail
             });
         }
     );

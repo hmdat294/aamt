@@ -78,6 +78,7 @@ export default function AdminProducts() {
     const buildFormData = (data, imageFiles) => {
 
         const form = new FormData();
+        
         form.append('category_product_id', data.category_product_id);
         form.append('name', data.name);
         form.append('offer', data.offer);
@@ -105,8 +106,7 @@ export default function AdminProducts() {
             await createProduct(data);
             setFormData({
                 ...emptyForm,
-                category_product_id:
-                    categoriesProducts?.[0]?.id || ''
+                category_product_id: categoriesProducts?.[0]?.id || ''
             });
             setImages([]);
             fetchData();

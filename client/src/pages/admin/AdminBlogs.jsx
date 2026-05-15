@@ -28,6 +28,8 @@ export default function AdminBlogs() {
         id: '',
         ...emptyForm
     });
+    const [editImages, setEditImages] = useState([]);
+    const [images, setImages] = useState([]);
 
     useEffect(() => { fetchData() }, []);
 
@@ -64,20 +66,41 @@ export default function AdminBlogs() {
         }
     };
 
-    const handleCreatePost =
-        async () => {
-            try {
-                await createPost({
-                    title: formData.title,
-                    content: formData.content,
-                    category_post_id: Number(formData.category_post_id)
-                });
-                setFormData({ ...emptyForm, category_post_id: categoriesPosts?.[0]?.id || '' });
-                fetchData();
-            } catch (err) {
-                console.log(err);
-            }
-        };
+    const buildFormData = (data, imageFile) => {
+
+        const form = new FormData();
+
+        form.append('title', data.title);
+        form.append('content', data.content);
+        form.append('category_post_id', data.category_post_id);
+
+        if (imageFile) form.append('thumbnail', imageFile[0]);
+
+        return form;
+    };
+
+    const handleCreatePost = async (e) => {
+
+        e.preventDefault();
+        try {
+
+            const data = buildFormData(formData, images);
+
+            console.log(formData);
+            console.log(images);
+
+            await createPost(data);
+            setFormData({
+                ...emptyForm,
+                category_post_id: categoriesPosts?.[0]?.id || ''
+            });
+            setImages([]);
+            fetchData();
+
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const handleEdit = (post) => {
 
@@ -92,37 +115,40 @@ export default function AdminBlogs() {
         setOpenEditModal(true);
     };
 
-    const handleUpdate =
-        async () => {
-            try {
-                await updatePost(
-                    editForm.id,
-                    {
-                        title: editForm.title,
-                        content: editForm.content,
-                        category_post_id: Number(editForm.category_post_id)
-                    }
-                );
-                setOpenEditModal(false);
-                fetchData();
-            } catch (err) {
-                console.log(err);
-            }
-        };
+    const handleUpdate = async () => {
+        try {
+            await updatePost(
+                editForm.id,
+                {
+                    title: editForm.title,
+                    content: editForm.content,
+                    category_post_id: Number(editForm.category_post_id)
+                }
+            );
+            setOpenEditModal(false);
+            fetchData();
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
-    const handleDelete =
-        async (id) => {
+    const handleDelete = async (id) => {
 
-            const confirmDelete = window.confirm('Delete this post?');
-            if (!confirmDelete) return;
+        const confirmDelete = window.confirm('Delete this post?');
+        if (!confirmDelete) return;
 
-            try {
-                await deletePost(id);
-                fetchData();
-            } catch (err) {
-                console.log(err);
-            }
-        };
+        try {
+            await deletePost(id);
+            fetchData();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const handleImageChange = (e, isEdit = false) => {
+        if (isEdit) setEditImages(e.target.files);
+        else setImages(e.target.files);
+    };
 
     const renderContent = (html) => {
         return html.replace(/<oembed url="(.*?)"><\/oembed>/g,
@@ -144,54 +170,63 @@ export default function AdminBlogs() {
                 Create Blog
             </h1>
 
-            <div className='grid grid-cols-2 gap-5 mb-5'>
+            <form onSubmit={handleCreatePost} className='space-y-4'>
 
-                <input type='text' placeholder='Title' value={formData.title}
-                    onChange={(e) =>
+                <div className='grid grid-cols-2 gap-5 mb-5'>
+
+                    <input type='text' placeholder='Title' value={formData.title}
+                        onChange={(e) =>
+                            setFormData(prev => ({
+                                ...prev,
+                                title: e.target.value
+                            }))}
+                        className='bg-white border p-3 rounded-lg' />
+
+                    <select value={formData.category_post_id}
+                        onChange={(e) =>
+                            setFormData(prev => ({
+                                ...prev,
+                                category_post_id: e.target.value
+                            }))}
+                        className='bg-white border p-3 rounded-lg'>
+
+                        {categoriesPosts.map(
+                            item => (
+                                <option key={item.id} value={item.id}>{item.name}</option>
+                            )
+                        )}
+                    </select>
+
+                </div>
+
+                <CKEditor editor={ClassicEditor} data={formData.content}
+                    config={{ licenseKey: 'GPL', extraPlugins: [CustomUploadAdapterPlugin] }}
+                    onChange={(event, editor) => {
+                        const data = editor.getData();
                         setFormData(prev => ({
                             ...prev,
-                            title: e.target.value
-                        }))}
-                    className='bg-white border p-3 rounded-lg' />
+                            content: data
+                        }));
+                    }} />
 
-                <select value={formData.category_post_id}
-                    onChange={(e) =>
-                        setFormData(prev => ({
-                            ...prev,
-                            category_post_id: e.target.value
-                        }))}
-                    className='bg-white border p-3 rounded-lg'>
+                <input type='file' onChange={handleImageChange} className='border p-3 rounded-lg w-full' />
 
-                    {categoriesPosts.map(
-                        item => (
-                            <option key={item.id} value={item.id}>{item.name}</option>
-                        )
-                    )}
-                </select>
+                <button type='submit' className='mt-5 bg-black text-white px-5 py-3 rounded-lg'>Save Blog</button>
 
-            </div>
+            </form>
 
-            <CKEditor editor={ClassicEditor} data={formData.content}
-                config={{ licenseKey: 'GPL', extraPlugins: [CustomUploadAdapterPlugin] }}
-                onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setFormData(prev => ({
-                        ...prev,
-                        content: data
-                    }));
-                }} />
-
-            <button onClick={handleCreatePost} className='mt-5 bg-black text-white px-5 py-3 rounded-lg'>Save Blog</button>
 
             <div className='space-y-5 mt-10'>
 
                 {posts.map(item => (
-                    <div key={item.id} className='border p-5 rounded-xl' >
+                    <div key={item.id} className='border p-5 rounded-xl'>
                         <div className='flex justify-between items-start mb-5'>
                             <div>
                                 <h2 className='text-xl font-bold'> {item.title} </h2>
                                 <p>Category:{' '}{item.category_name} </p>
                             </div>
+
+                            {/* <img src={item.thumbnail} alt="" /> */}
 
                             <div className='flex gap-3'>
                                 <button onClick={() => handleEdit(item)} className='bg-yellow-500 text-white px-4 py-2 rounded-lg'>Edit</button>

@@ -132,79 +132,54 @@ router.get('/products/:id', (req, res) => {
 });
 
 
-router.post(
-    '/products',
-    upload.array('images', 10),
-    (req, res) => {
+router.post('/products', upload.array('images', 10), (req, res) => {
 
-        const {
+    const { category_product_id, name, offer, description } = req.body;
+
+    const sqlProduct = `INSERT INTO products ( category_product_id, name, offer, description ) VALUES (?, ?, ?, ?)`;
+
+    db.query(
+        sqlProduct,
+        [
             category_product_id,
             name,
             offer,
             description
-        } = req.body;
+        ],
+        (err, result) => {
 
-        const sqlProduct = `
-            INSERT INTO products
-            (
-                category_product_id,
-                name,
-                offer,
-                description
-            )
-            VALUES (?, ?, ?, ?)
-        `;
+            if (err) return res.status(500).json(err);
 
-        db.query(
-            sqlProduct,
-            [
-                category_product_id,
-                name,
-                offer,
-                description
-            ],
-            (err, result) => {
+            const productId = result.insertId;
 
-                if (err) {
-                    return res.status(500).json(err);
-                }
+            if (!req.files || req.files.length === 0) 
+                return res.json({
+                    message: 'Product created'
+                });
+            
 
-                const productId = result.insertId;
+            const imageValues = req.files.map(file => [
+                productId,
+                `http://localhost:5000/uploads/${file.filename}`
+            ]);
 
-                if (!req.files || req.files.length === 0) {
-                    return res.json({
-                        message: 'Product created'
+            const sqlImages = `INSERT INTO product_images (product_id, url) VALUES ?`;
+
+            db.query(
+                sqlImages,
+                [imageValues],
+                (err2) => {
+
+                    if (err2) return res.status(500).json(err2);
+
+                    res.json({
+                        message: 'Product created successfully'
                     });
                 }
-
-                const imageValues = req.files.map(file => [
-                    productId,
-                    `http://localhost:5000/uploads/${file.filename}`
-                ]);
-
-                const sqlImages = `
-                    INSERT INTO product_images
-                    (product_id, url)
-                    VALUES ?
-                `;
-
-                db.query(
-                    sqlImages,
-                    [imageValues],
-                    (err2) => {
-
-                        if (err2) {
-                            return res.status(500).json(err2);
-                        }
-
-                        res.json({
-                            message: 'Product created successfully'
-                        });
-                    }
-                );
-            }
-        );
-    }
+            );
+        }
+    );
+}
 );
 
 

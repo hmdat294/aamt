@@ -1,4 +1,5 @@
 import { adminApi } from './apiAdmin';
+import { removeToken } from '../utils/authCookie';
 
 export const loginAdmin = async (data) => {
 
@@ -11,6 +12,5 @@ export const loginAdmin = async (data) => {
 };
 
 export const logoutAdmin = () => {
-
-    localStorage.removeItem('token');
+    removeToken();
 };

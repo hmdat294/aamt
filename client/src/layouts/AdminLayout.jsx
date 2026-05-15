@@ -1,4 +1,11 @@
 import { Outlet, NavLink } from 'react-router-dom';
+import { logoutAdmin } from '../services/authService';
+
+
+const handleLogout = () => {
+    logoutAdmin();
+    window.location.href = '/';
+};
 
 export default function AdminLayout() {
     return (
@@ -12,7 +19,7 @@ export default function AdminLayout() {
                 <nav className="flex flex-col gap-3">
 
                     <NavLink to="/admin"
-                        className="px-4 py-2 rounded bg-gray-800">
+                        className="px-4 py-2 rounded hover:bg-gray-800">
                         Dashboard
                     </NavLink>
 
@@ -32,6 +39,11 @@ export default function AdminLayout() {
                     </NavLink>
 
                 </nav>
+
+                <div>
+                    <button className='w-full'
+                        onClick={handleLogout}>Logout</button>
+                </div>
             </aside>
 
             <main className="flex-1 p-6">
