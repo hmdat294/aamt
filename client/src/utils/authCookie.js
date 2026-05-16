@@ -5,7 +5,7 @@ const TOKEN_KEY = 'token';
 export const setToken = (token) => {
 
     Cookies.set(TOKEN_KEY, token, {
-        expires: 1, // 1 ngày
+        expires: 0.5, // 1 ngày
         secure: false, // true nếu dùng https
         sameSite: 'Strict'
     });

@@ -24,6 +24,7 @@ import AdminBlogs from './pages/admin/AdminBlogs';
 import AdminCategory from './pages/admin/AdminCategory';
 import Login from './pages/auth/Login';
 import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 
 export default function App() {
 
@@ -74,7 +75,11 @@ export default function App() {
                 {/* LOGIN ROUTES */}
                 <Route
                     path="/login"
-                    element={<Login />}
+                    element={
+                        <PublicRoute>
+                            <Login />
+                        </PublicRoute>
+                    }
                 />
 
                 {/* ADMIN ROUTES */}
