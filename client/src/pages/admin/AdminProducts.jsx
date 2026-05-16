@@ -69,6 +69,13 @@ export default function AdminProducts() {
     };
 
     const handleImageChange = (e, isEdit = false) => {
+
+        if (e.target.files.length > 5) {
+            alert('Chỉ được chọn tối đa 5 ảnh');
+            e.target.value = '';
+            return;
+        }
+
         if (isEdit) setEditImages(e.target.files);
         else setImages(e.target.files);
     };
@@ -97,6 +104,11 @@ export default function AdminProducts() {
         e.preventDefault();
         try {
 
+            if (images.length == 0 || !formData.name || !formData.offer || !formData.description) {
+                alert('Chưa nhập đủ thông tin!!!');
+                return;
+            }
+
             const data = buildFormData(formData, images);
 
             console.log(formData);
@@ -106,6 +118,8 @@ export default function AdminProducts() {
                 ...emptyForm,
                 category_product_id: categoriesProducts?.[0]?.id || ''
             });
+
+            e.target.value = '';
             setImages([]);
             fetchData();
 
@@ -191,10 +205,10 @@ export default function AdminProducts() {
         );
     };
 
-    
+
 
     const inputClass =
-        'bg-white w-full border border-gray-200 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-black/10';
+        'bg-white border border-gray-200 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-black/10';
 
     const ckConfig = {
         licenseKey: 'GPL',
@@ -222,16 +236,19 @@ export default function AdminProducts() {
                     <h2 className="text-xl font-bold mb-5">Add Product</h2>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
-                        <select name="category_product_id" value={formData.category_product_id} onChange={handleChange} className={inputClass}>
-                            <option value="">Chọn danh mục</option>
-                            {categoriesProducts.map((item) => (
-                                <option key={item.id} value={item.id}>
-                                    {item.name}
-                                </option>
-                            ))}
-                        </select>
 
-                        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Product name" className={inputClass} />
+                        <div className='grid grid-cols-2 gap-5'>
+                            <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Product name" className={inputClass} />
+
+                            <select name="category_product_id" value={formData.category_product_id} onChange={handleChange} className={inputClass}>
+                                <option value="">Chọn danh mục</option>
+                                {categoriesProducts.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
 
                         <div>
                             <p className="text-sm font-medium text-gray-700 mb-2">Offer</p>
@@ -269,11 +286,14 @@ export default function AdminProducts() {
                             </div>
                         </div>
 
-                        <input type="file" multiple onChange={handleImageChange} className={`${inputClass} file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:bg-gray-100 file:text-sm`} />
+                        <div className='flex w-full justify-between'>
+                            <input type="file" multiple onChange={handleImageChange}
+                                className={`${inputClass} w-1/2 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:bg-gray-100 file:text-sm`} />
 
-                        <button type="submit" className="bg-black text-white px-5 py-3 rounded-md hover:bg-gray-900 transition-colors" >
-                            Add Product
-                        </button>
+                            <button type="submit" className="cursor-pointer bg-black text-white px-5 py-3 rounded-md hover:bg-gray-900 transition-colors" >
+                                Add Product
+                            </button>
+                        </div>
                     </form>
                 </section>
             )}

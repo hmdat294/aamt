@@ -78,6 +78,11 @@ export default function AdminBlogs() {
         e.preventDefault();
         try {
 
+            if (images.length == 0 || !formData.title || !formData.content) {
+                alert('Chưa nhập đủ thông tin!!!');
+                return;
+            }
+
             const data = buildFormData(formData, images);
 
             console.log(formData);
@@ -157,7 +162,7 @@ export default function AdminBlogs() {
     };
 
     const inputClass =
-        'bg-white w-full border border-gray-200 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-black/10';
+        'bg-white border border-gray-200 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-black/10';
 
     return (
         <div className="space-y-6">
@@ -219,13 +224,15 @@ export default function AdminBlogs() {
                             />
                         </div>
 
-                        <input type="file" onChange={handleImageChange}
-                            className={`${inputClass} file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:bg-gray-100 file:text-sm`} />
+                        <div className='flex w-full justify-between'>
+                            <input type="file" onChange={handleImageChange}
+                                className={`${inputClass} w-1/2 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:bg-gray-100 file:text-sm`} />
 
-                        <button type="submit"
-                            className="bg-black text-white px-5 py-3 rounded-md hover:bg-gray-900 transition-colors" >
-                            Save Blog
-                        </button>
+                            <button type="submit"
+                                className="bg-black text-white px-5 py-3 rounded-md hover:bg-gray-900 transition-colors" >
+                                Save Blog
+                            </button>
+                        </div>
                     </form>
                 </section>
             )}
@@ -242,8 +249,8 @@ export default function AdminBlogs() {
                 ) : (
                     <div className="space-y-4">
                         {posts.map((item) => (
-                            <article key={item.id} className="border border-gray-200 p-5 rounded-lg flex gap-5 align-center" >
-                                {item.thumbnail && (<div className='w-200'>
+                            <article key={item.id} className="border border-gray-200 p-5 rounded-lg flex gap-5 items-center" >
+                                {item.thumbnail && (<div className='max-w-200'>
                                     <img src={item.thumbnail} className='rounded-[10px]' alt="" />
                                 </div>)}
                                 <div>

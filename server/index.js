@@ -7,6 +7,7 @@ const postsRoutes = require('./routes/postsRoutes');
 const archsRoutes = require('./routes/archsRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const loginRoutes = require('./routes/authRoutes');
+const bannersRoutes = require('./routes/bannersRoutes');
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.use(express.urlencoded({
 }));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/api', productsRoutes, postsRoutes, archsRoutes, categoryRoutes, loginRoutes);
+app.use('/api', productsRoutes, postsRoutes, archsRoutes, categoryRoutes, loginRoutes, bannersRoutes);
 
 app.get('/', (req, res) => {
     res.send('API running...');
