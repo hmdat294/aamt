@@ -11,6 +11,7 @@ import {
 
 import { getCategoriesPost } from '../../services/categoryService';
 import CustomUploadAdapterPlugin from '../../components/UploadAdapter';
+import limitHtmlText from '../../components/LimitText';
 
 export default function AdminBlogs() {
 
@@ -24,6 +25,7 @@ export default function AdminBlogs() {
     const [categoriesPosts, setCategoriesPosts] = useState([]);
     const [formData, setFormData] = useState(emptyForm);
     const [openEditModal, setOpenEditModal] = useState(false);
+    const [activeAddBlog, setActiveAddBlog] = useState(false);
     const [editForm, setEditForm] = useState({
         id: '',
         ...emptyForm
@@ -31,40 +33,32 @@ export default function AdminBlogs() {
     const [editImages, setEditImages] = useState([]);
     const [images, setImages] = useState([]);
 
-    useEffect(() => { fetchData() }, []);
-
-    useEffect(() => {
-
-        if (categoriesPosts.length > 0) {
-
-            setFormData(prev => ({
-                ...prev,
-                category_post_id:
-                    categoriesPosts[0].id
-            }));
-        }
-
-    }, [categoriesPosts]);
-
-    const fetchData = async () => {
-
+    async function fetchData() {
         try {
-
-            const [
-                resPosts,
-                resCategories
-            ] = await Promise.all([
+            const [resPosts, resCategories] = await Promise.all([
                 getPosts(),
-                getCategoriesPost()
+                getCategoriesPost(),
             ]);
 
             setPosts(resPosts.data);
             setCategoriesPosts(resCategories.data);
-
         } catch (err) {
             console.log(err);
         }
-    };
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (categoriesPosts.length > 0) {
+            setFormData(prev => ({
+                ...prev,
+                category_post_id: categoriesPosts[0].id,
+            }));
+        }
+    }, [categoriesPosts]);
 
     const buildFormData = (data, imageFile) => {
 
@@ -162,137 +156,198 @@ export default function AdminBlogs() {
         );
     };
 
+    const inputClass =
+        'bg-white w-full border border-gray-200 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-black/10';
+
     return (
-
-        <div className='max-w-6xl mx-auto p-5'>
-
-            <h1 className='text-3xl font-bold mb-5'>
-                Create Blog
-            </h1>
-
-            <form onSubmit={handleCreatePost} className='space-y-4'>
-
-                <div className='grid grid-cols-2 gap-5 mb-5'>
-
-                    <input type='text' placeholder='Title' value={formData.title}
-                        onChange={(e) =>
-                            setFormData(prev => ({
-                                ...prev,
-                                title: e.target.value
-                            }))}
-                        className='bg-white border p-3 rounded-lg' />
-
-                    <select value={formData.category_post_id}
-                        onChange={(e) =>
-                            setFormData(prev => ({
-                                ...prev,
-                                category_post_id: e.target.value
-                            }))}
-                        className='bg-white border p-3 rounded-lg'>
-
-                        {categoriesPosts.map(
-                            item => (
-                                <option key={item.id} value={item.id}>{item.name}</option>
-                            )
-                        )}
-                    </select>
-
+        <div className="space-y-6">
+            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 flex justify-between items-center">
+                <div className="flex flex-col gap-2">
+                    <h1 className="text-2xl font-bold">Blog Management</h1>
+                    <p className="text-gray-600 mt-1">
+                        Create, edit, and delete blog posts.
+                    </p>
                 </div>
-
-                <CKEditor editor={ClassicEditor} data={formData.content}
-                    config={{ licenseKey: 'GPL', extraPlugins: [CustomUploadAdapterPlugin] }}
-                    onChange={(event, editor) => {
-                        const data = editor.getData();
-                        setFormData(prev => ({
-                            ...prev,
-                            content: data
-                        }));
-                    }} />
-
-                <input type='file' onChange={handleImageChange} className='border p-3 rounded-lg w-full' />
-
-                <button type='submit' className='mt-5 bg-black text-white px-5 py-3 rounded-lg'>Save Blog</button>
-
-            </form>
-
-
-            <div className='space-y-5 mt-10'>
-
-                {posts.map(item => (
-                    <div key={item.id} className='border p-5 rounded-xl'>
-                        <div className='flex justify-between items-start mb-5'>
-                            <div>
-                                <h2 className='text-xl font-bold'> {item.title} </h2>
-                                <p>Category:{' '}{item.category_name} </p>
-                            </div>
-
-                            {/* <img src={item.thumbnail} alt="" /> */}
-
-                            <div className='flex gap-3'>
-                                <button onClick={() => handleEdit(item)} className='bg-yellow-500 text-white px-4 py-2 rounded-lg'>Edit</button>
-                                <button onClick={() => handleDelete(item.id)} className='bg-red-500 text-white px-4 py-2 rounded-lg'>Delete </button>
-                            </div>
-                        </div>
-
-                        <div
-                            className='prose max-w-none'
-                            dangerouslySetInnerHTML={{
-                                __html: renderContent(item.content)
-                            }} />
-                    </div>
-                ))}
+                <button
+                    type="button" onClick={() => setActiveAddBlog(!activeAddBlog)}
+                    className="cursor-pointer bg-black text-white px-5 py-3 rounded-md hover:bg-gray-900 transition-colors">
+                    {activeAddBlog ? 'Close' : 'Add Blog'}
+                </button>
             </div>
 
-            {openEditModal && (
+            {activeAddBlog && (
+                <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+                    <h2 className="text-xl font-bold mb-5">Create Blog</h2>
 
-                <div className='fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-5'>
+                    <form onSubmit={handleCreatePost} className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" placeholder="Title" value={formData.title} onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value, }))} className={inputClass} />
 
-                    <div className='bg-white w-full max-w-4xl p-6 rounded-2xl max-h-[90vh] overflow-y-auto'>
-
-                        <h2 className='text-2xl font-bold mb-5'>
-                            Edit Blog
-                        </h2>
-
-                        <div className='grid grid-cols-2 gap-5 mb-5'>
-
-                            <input type='text' value={editForm.title} onChange={(e) =>
-                                setEditForm(prev => ({
-                                    ...prev,
-                                    title: e.target.value
-                                }))}
-                                className='border p-3 rounded-lg' />
-
-                            <select value={editForm.category_post_id} onChange={(e) =>
-                                setEditForm(prev => ({
-                                    ...prev,
-                                    category_post_id: e.target.value
-                                }))}
-                                className='border p-3 rounded-lg'>
-
-                                {categoriesPosts.map(
-                                    item => (
-                                        <option key={item.id} value={item.id} >{item.name} </option>
-                                    )
-                                )}
+                            <select
+                                value={formData.category_post_id}
+                                onChange={(e) =>
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        category_post_id: e.target.value,
+                                    }))
+                                }
+                                className={inputClass}
+                            >
+                                {categoriesPosts.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.name}
+                                    </option>
+                                ))}
                             </select>
-
                         </div>
 
-                        <CKEditor
-                            editor={ClassicEditor} data={editForm.content}
-                            config={{ licenseKey: 'GPL', extraPlugins: [CustomUploadAdapterPlugin] }}
-                            onChange={(event, editor) => {
-                                const data = editor.getData();
-                                setEditForm(prev => ({
-                                    ...prev,
-                                    content: data
-                                }));
-                            }}
-                        />
+                        <div className="border border-gray-200 rounded-md overflow-hidden">
+                            <CKEditor
+                                editor={ClassicEditor}
+                                data={formData.content}
+                                config={{
+                                    licenseKey: 'GPL',
+                                    extraPlugins: [CustomUploadAdapterPlugin],
+                                }}
+                                onChange={(event, editor) => {
+                                    const data = editor.getData();
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        content: data,
+                                    }));
+                                }}
+                            />
+                        </div>
 
-                        <div className='flex gap-3 mt-5'>
-                            <button onClick={handleUpdate} className='bg-blue-500 text-white px-5 py-3 rounded-lg'>Update</button>
-                            <button onClick={() => setOpenEditModal(false)} className='bg-gray-300 px-5 py-3 rounded-lg'>Cancel
+                        <input type="file" onChange={handleImageChange}
+                            className={`${inputClass} file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:bg-gray-100 file:text-sm`} />
+
+                        <button type="submit"
+                            className="bg-black text-white px-5 py-3 rounded-md hover:bg-gray-900 transition-colors" >
+                            Save Blog
+                        </button>
+                    </form>
+                </section>
+            )}
+
+            <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+                <h2 className="text-xl font-bold mb-5">
+                    All Blogs ({posts.length})
+                </h2>
+
+                {posts.length === 0 ? (
+                    <div className="text-gray-500 py-8 text-center border border-dashed border-gray-200 rounded-md">
+                        No blog posts yet.
+                    </div>
+                ) : (
+                    <div className="space-y-4">
+                        {posts.map((item) => (
+                            <article key={item.id} className="border border-gray-200 p-5 rounded-lg flex gap-5 align-center" >
+                                {item.thumbnail && (<div className='w-200'>
+                                    <img src={item.thumbnail} className='rounded-[10px]' alt="" />
+                                </div>)}
+                                <div>
+                                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-4">
+                                        <div>
+                                            <h3 className="text-lg font-bold">{item.title}</h3>
+                                            <p className="text-sm text-gray-500 mt-1">
+                                                Danh mục: {item.category_name}
+                                            </p>
+                                        </div>
+
+                                        <div className="flex gap-3 shrink-0">
+                                            <button type="button" onClick={() => handleEdit(item)} className="bg-amber-500 text-white px-4 py-2 rounded-md hover:bg-amber-600 transition-colors">
+                                                Edit
+                                            </button>
+                                            <button type="button" onClick={() => handleDelete(item.id)} className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className="prose max-w-none text-gray-700">
+                                        {limitHtmlText(item.content, 300)}
+                                    </div>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                )}
+            </section>
+
+            {openEditModal && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                    <div
+                        role="dialog"
+                        aria-modal="true"
+                        className="bg-white w-full max-w-4xl p-6 rounded-xl max-h-[90vh] overflow-y-auto shadow-lg"
+                    >
+                        <h2 className="text-xl font-bold mb-5">Edit Blog</h2>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <input
+                                type="text"
+                                value={editForm.title}
+                                onChange={(e) =>
+                                    setEditForm(prev => ({
+                                        ...prev,
+                                        title: e.target.value,
+                                    }))
+                                }
+                                className={inputClass}
+                            />
+
+                            <select
+                                value={editForm.category_post_id}
+                                onChange={(e) =>
+                                    setEditForm(prev => ({
+                                        ...prev,
+                                        category_post_id: e.target.value,
+                                    }))
+                                }
+                                className={inputClass}
+                            >
+                                {categoriesPosts.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="border border-gray-200 rounded-md overflow-hidden mb-5">
+                            <CKEditor
+                                editor={ClassicEditor}
+                                data={editForm.content}
+                                config={{
+                                    licenseKey: 'GPL',
+                                    extraPlugins: [CustomUploadAdapterPlugin],
+                                }}
+                                onChange={(event, editor) => {
+                                    const data = editor.getData();
+                                    setEditForm(prev => ({
+                                        ...prev,
+                                        content: data,
+                                    }));
+                                }}
+                            />
+                        </div>
+
+                        <div className="flex justify-end gap-3">
+                            <button
+                                type="button"
+                                onClick={() => setOpenEditModal(false)}
+                                className="border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleUpdate}
+                                className="bg-black text-white px-5 py-2 rounded-md hover:bg-gray-900 transition-colors"
+                            >
+                                Update
                             </button>
                         </div>
                     </div>
